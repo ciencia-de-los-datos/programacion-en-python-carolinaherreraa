@@ -11,7 +11,7 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 
 """
-
+data= open("data.csv", "r").readlines()
 
 def pregunta_01():
     """
@@ -21,7 +21,12 @@ def pregunta_01():
     214
 
     """
-    return
+    sum_second_column=0
+    for lines in data:
+        lines=lines.split('\t')
+        sum_second_column= sum_second_column + int(lines[1])
+
+    return sum_second_column
 
 
 def pregunta_02():
@@ -39,7 +44,19 @@ def pregunta_02():
     ]
 
     """
-    return
+
+    dictionary= {}  
+    for letter in data:
+        letter=letter.split('\t')
+        letter=letter[0]
+        if letter[0] in dictionary:
+            dictionary[letter]+=1
+        else:
+            dictionary[letter]=1
+    resultado=sorted(dictionary.items())
+
+    return(resultado) 
+    
 
 
 def pregunta_03():
@@ -57,7 +74,19 @@ def pregunta_03():
     ]
 
     """
-    return
+    dictionary={} 
+    for letter in data:
+      letter=letter.split('\t')
+      key=letter[0]
+      count=int(letter[1])
+      if key in dictionary:
+        dictionary[key]+=count
+      else:
+        dictionary[key]=count
+    resultado=sorted(dictionary.items())
+
+    return(resultado)
+    
 
 
 def pregunta_04():
@@ -82,7 +111,20 @@ def pregunta_04():
     ]
 
     """
-    return
+    
+    dictionary={} 
+    for line in data:
+      line=line.split('\t')
+      date=line[2].split('-')
+      month=date[1]
+      if month in dictionary:
+        dictionary[month]+=1
+      else:
+        dictionary[month]=1
+    resultado=sorted(dictionary.items())
+
+    return(resultado)
+    
 
 
 def pregunta_05():
@@ -100,7 +142,23 @@ def pregunta_05():
     ]
 
     """
-    return
+    
+    dictionary= {}  
+    for line in data:
+        line=line.split('\t')
+        letter=(line[0])
+        num=int(line[1])
+        if letter in dictionary:
+          dictionary[letter].append(num)
+        else:
+          dictionary[letter]=[num]
+    resultados = []
+    for letter, lista in dictionary.items():
+          tupla_resultado = (letter, max(lista), min(lista))
+          resultados.append(tupla_resultado)
+    
+    return(sorted(resultados))
+    
 
 
 def pregunta_06():
@@ -125,7 +183,27 @@ def pregunta_06():
     ]
 
     """
-    return
+
+    
+    dictionary={}
+    for line in data:
+      line=line.strip().split('\t')
+      column_5=line[4]
+      tuplas=column_5.split(",")
+      for tupla in tuplas:
+          key, (value)= tupla.split(":")
+          if key in dictionary:
+            dictionary[key].append(int(value))
+          else:
+            dictionary[key]=[int(value)]
+
+    resultados = []
+    for key, value in dictionary.items():
+          tupla_resultado = (key, min(value), max(value))
+          resultados.append(tupla_resultado)
+
+    return(sorted(resultados))
+    
 
 
 def pregunta_07():
@@ -149,7 +227,23 @@ def pregunta_07():
     ]
 
     """
-    return
+    
+    dictionary={}
+    for line in data:
+      line=line.strip().split('\t')
+      number=line[1]
+      letter=line[0]
+      if number in dictionary:
+        dictionary[number].append(letter)
+      else:
+        dictionary[number]=[letter]
+    resultados=[]
+    for number,letters in dictionary.items():
+        tupla_resultado =(int(number),letters)
+        resultados.append(tupla_resultado)
+
+    return(sorted(resultados))
+
 
 
 def pregunta_08():
@@ -174,7 +268,23 @@ def pregunta_08():
     ]
 
     """
-    return
+    dictionary={}
+    for line in data:
+      line=line.strip().split('\t')
+      number=line[1]
+      letter=line[0]
+      if number in dictionary:
+        dictionary[number].append(letter)
+      else:
+        dictionary[number]=[letter]
+    resultados=[]
+    for number,letters in dictionary.items():
+        tupla_resultado =(int(number),sorted(list(set(letters))))
+        resultados.append(tupla_resultado)
+
+    return(sorted(resultados))
+
+    
 
 
 def pregunta_09():
@@ -197,8 +307,24 @@ def pregunta_09():
     }
 
     """
-    return
+    dictionary={}
+    for line in data:
+      line=line.strip().split('\t')
+      column_5=line[4]
+      tuplas=column_5.split(",")
+      for tupla in tuplas:
+          key, value= tupla.split(":")
+          if key in dictionary:
+            dictionary[key]+=1
+          else:
+            dictionary[key]=1
+    sorted_dictionary=sorted(dictionary.items())
+    new_dictionary={}
+    for item in sorted_dictionary:
+      new_dictionary[item[0]] = item[1]
 
+    return (new_dictionary)
+    
 
 def pregunta_10():
     """
@@ -218,7 +344,18 @@ def pregunta_10():
 
 
     """
-    return
+    dictionary={}
+    lista=[]
+    for line in data:
+      line=line.strip().split('\t')
+      letter=line[0]
+      column_4=len(line[3].split(","))
+      column_5=len(line[4].split(","))
+      dictionary[letter]= (column_4, column_5)
+      lista.append((letter, column_4, column_5))
+
+    return(lista)
+    
 
 
 def pregunta_11():
@@ -239,7 +376,26 @@ def pregunta_11():
 
 
     """
-    return
+    dictionary={}
+    new_dictionary={}
+    for line in data:
+      line=line.strip().split('\t')
+      letter=line[3].split(",")
+      num=int(line[1])
+      dictionary={element: num for element in letter}
+      for element, value in dictionary.items():
+        if element in new_dictionary:
+          new_dictionary[element]+=value
+        else:
+          new_dictionary[element]=value
+    ordered_dict_items = sorted(new_dictionary.items())
+    ordered_dict = {}
+    for item in ordered_dict_items:
+      ordered_dict[item[0]] = item[1]
+    ordered_dict = dict(ordered_dict)
+
+    return (ordered_dict)
+    
 
 
 def pregunta_12():
@@ -257,4 +413,26 @@ def pregunta_12():
     }
 
     """
-    return
+    dictionary={}
+    new_dictionary={}
+    for line in data:
+      line=line.strip().split('\t')
+      key=line[0]
+      tuplas=line[4].split(",")
+      num_list=[]
+      for element in tuplas:
+        num_list.append(int(element.split(":")[1]))
+      if key in new_dictionary:
+          dictionary[key].extend(num_list)
+      else:
+          dictionary[key]= num_list
+      for key, num_list in dictionary.items():
+        new_dictionary[key] = sum(num_list)
+    ordered_dict_items = sorted(new_dictionary.items())
+    ordered_dict = {}
+    for item in ordered_dict_items:
+      ordered_dict[item[0]] = item[1]
+    ordered_dict = dict(ordered_dict)
+    
+    return (ordered_dict)
+    
